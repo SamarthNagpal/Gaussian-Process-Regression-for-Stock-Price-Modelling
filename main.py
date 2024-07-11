@@ -6,7 +6,7 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 import sklearn.gaussian_process.kernels as kernels
 import scipy.stats as stats
 
-stock = 'TCS.NS'           # symbol of the stock
+stock = 'TCS'           # symbol of the stock
 period = '1y'           # '1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y'
 interval = '1d'         # '1m', '2m', '5m', '15m', '30m', '60m', '90m', '1h', '1d', '5d', '1wk', '1mo', '3mo'
 window_size = 150      # number of intervals used for predicting
@@ -84,8 +84,8 @@ def plot(y_train, y_test, y_pred, sigma, probability):
 
     x_min = -1
     x_max = len(y_train) + len(y_test) + 1
-    y_min = min(y_test.min(), y_pred.min()) - 500
-    y_max = max(y_test.max(), y_pred.max()) + 500
+    y_min = min(y_test.min(), y_pred.min()) - 1
+    y_max = max(y_test.max(), y_pred.max()) + 1
     plt.xlim(x_min, x_max)
     plt.ylim(y_min, y_max)
 
@@ -99,7 +99,7 @@ X_train, X_test, y_train, y_test = prepare_data(stock, period, interval, window_
 # some other kernels that can also be used instead
 # kernel = kernels.Matern(length_scale=1)
 # kernel = kernels.RationalQuadratic(length_scale=1.0, alpha=1.0)
-kernel = kernels.RBF(length_scale=1000)      # length_scale parameter can be used to optimize the model for different datsets
+kernel = kernels.RBF(length_scale=1)      # length_scale parameter can be used to optimize the model for different datsets
 gaussian_process = GaussianProcessRegressor(kernel=kernel)
 
 gaussian_process.fit(X_train, y_train)
